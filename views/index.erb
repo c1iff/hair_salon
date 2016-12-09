@@ -1,0 +1,32 @@
+<h1>Barbers</h1>
+
+<% if @stylists.any?() %>
+  <h3>Here are your stylists:</h3>
+
+  <ul>
+    <% @stylists.each() do |stylist| %>
+      <li><a href="/stylists/<%= stylist.id()%>"><%= stylist.name() %></a> </li>
+    <% end %>
+  </ul>
+
+<% else %>
+
+    <p>There are no stylists yet!</p>
+
+<% end %>
+
+<div class="form-group">
+<form action="/stylists" method="post">
+  <label for="first_name">Enter first name</label>
+  <input id="first_name" name="first_name" type="text" class="form-control">
+  <label for="last_name">Enter last name</label>
+  <input id="last_name" name="last_name" type="text" class="form-control">
+  <label for="licence_number">Enter cosmotology licence number</label>
+  <input id="licence_number" name="licence_number" type="text" class="form-control">
+  <br>
+  <button class="btn-primary btn" type="submit">Add Stylist</button>
+</form>
+</div>
+
+<a href="/stylists" class="btn-primary btn">Add a Stylist</a>
+<a href="/clients" class="btn-primary btn">Add a Client</a>
