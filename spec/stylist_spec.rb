@@ -7,6 +7,14 @@ describe(Stylist) do
     it('starts off with empty array') do
       expect(Stylist.all).to(eq([]))
     end
+
+    it('returns an array of stylists when stylists are in database') do
+      new_stylist = Stylist.new(:first_name => 'David', :last_name => 'Bowie', :cosmetology_lic_number => 123456)
+      new_stylist.save()
+      new_stylist_two = Stylist.new(:first_name => 'Jim', :last_name => 'Morrison', :cosmetology_lic_number => 654321)
+      new_stylist_two.save()
+      expect(Stylist.all).to(eq([new_stylist, new_stylist_two]))
+    end
   end
 
   describe('#first_name') do
@@ -59,6 +67,26 @@ describe(Stylist) do
       new_client_two = Client.new(:first_name => 'Jimi', :last_name => 'Hendrix', :stylist_id => new_stylist.id)
       new_client_two.save()
       expect(new_stylist.clients()).to(eq([new_client, new_client_two]))
+    end
+  end
+
+  describe("#update") do
+    it("lets you update a stylist in the database") do
+      new_stylist = Stylist.new(:first_name => 'David', :last_name => 'Bowie', :cosmetology_lic_number => 123456)
+      new_stylist.save()
+      new_stylist.update({:first_name => "Dave"})
+      expect(new_stylist.first_name()).to(eq("Dave"))
+    end
+  end
+
+  describe("#delete") do
+    it("lets you delete a stylist from the database") do
+      new_stylist = Stylist.new(:first_name => 'David', :last_name => 'Bowie', :cosmetology_lic_number => 123456)
+      new_stylist.save()
+      new_stylist_two = Stylist.new(:first_name => 'Jimmy', :last_name => 'Page', :cosmetology_lic_number => 456546)
+      new_stylist_two.save()
+      new_stylist.delete()
+      expect(Stylist.all()).to(eq([new_stylist_two]))
     end
   end
 end

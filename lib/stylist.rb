@@ -12,7 +12,7 @@ class Stylist
     returned_stylists = DB.exec('SELECT * FROM stylists')
     stylists = []
     returned_stylists.each do |stylist|
-      current_stylist = Stylist.new(:name => stylist['name'], :id => stylist['id'])
+      current_stylist = Stylist.new(:first_name => stylist['first_name'], :last_name => stylist['last_name'], :cosmetology_lic_number => stylist['cosmetology_lic_number'].to_i, :id => stylist['id'].to_i)
       stylists.push(current_stylist)
     end
     stylists
@@ -31,7 +31,8 @@ class Stylist
 
   def self.find(stylist_id)
     stylist = DB.exec("SELECT * FROM stylists WHERE id = #{stylist_id};").first
-    Stylist.new(:first_name => stylist['first_name'], :last_name => stylist['last_name'], :cosmetology_lic_number => stylist['cosmetology_lic_number'].to_i, :id => stylist['id'].to_i)
+    new_stylist = Stylist.new(:first_name => stylist['first_name'], :last_name => stylist['last_name'], :cosmetology_lic_number => stylist['cosmetology_lic_number'].to_i, :id => stylist['id'].to_i)
+    new_stylist
   end
 
   def clients
@@ -42,5 +43,16 @@ class Stylist
       clients.push(current_client)
     end
     clients
+  end
+
+  def update(attributes)
+    @first_name = attributes.fetch(:first_name, self.first_name)
+    @last_name = attributes.fetch(:last_name, self.last_name)
+    @cosmetology_lic_number = attributes.fetch(:cosmetology_lic_number, self.cosmetology_lic_number)
+    DB.exec("UPDATE stylists SET first_name = '#{@first_name}', last_name = '#{@last_name}', cosmetology_lic_number = '#{@cosmetology_lic_number}' WHERE id = #{@id};")
+  end
+
+  def delete
+     DB.exec("DELETE FROM stylists WHERE id = #{@id};")
   end
 end
