@@ -12,7 +12,7 @@ class Client
     returned_clients = DB.exec('SELECT * FROM clients')
     clients = []
     returned_clients.each do |client|
-      current_client = Client.new(:name => client['name'], :stylist => client['stylist_id'].to_i, :id => client['id'])
+      current_client = Client.new(:first_name => client['first_name'], :last_name => client['last_name'], :stylist_id => client['stylist_id'].to_i, :id => client['id'])
       clients.push(current_client)
     end
     clients
@@ -33,8 +33,14 @@ class Client
     Client.new(:first_name => client['first_name'], :last_name => client['last_name'], :stylist_id => client['stylist_id'], :id => client['id'].to_i)
   end
 
-  def clients
+  def update(attributes)
+    @first_name = attributes.fetch(:first_name, self.first_name)
+    @last_name = attributes.fetch(:last_name, self.last_name)
+    @stylist_id = attributes.fetch(:stylist_id, self.stylist_id)
+    DB.exec("UPDATE clients SET first_name = '#{@first_name}', last_name = '#{@last_name}', stylist_id = '#{@stylist_id}' WHERE id = #{@id};")
+  end
 
-
+  def delete
+     DB.exec("DELETE FROM clients WHERE id = #{@id};")
   end
 end
