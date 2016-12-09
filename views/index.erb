@@ -1,31 +1,45 @@
-<h1>Barbers</h1>
+<h1>Spaceman Hair Salon</h1>
+<div class="row">
+  <div class="col-md-6">
 
-<% if @stylists.any?() %>
-  <h3>Here are your stylists:</h3>
 
-  <ul>
-    <% @stylists.each() do |stylist| %>
-      <li><a href="/stylist/<%= stylist.id()%>"><%= stylist.first_name() %></a> </li>
+    <% if @stylists.any?() %>
+      <h3>Current Stylists:</h3>
+
+
+        <% @stylists.each() do |stylist| %>
+        <div class="stylist">
+          <form action="/" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <input type="hidden" name="stylist_id" value="<%= stylist.id() %>">
+            <h4> <%= stylist.first_name() %> <%= stylist.last_name() %> </h4>
+            <a href="/stylist/<%= stylist.id()%>" class="btn-primary btn">View / Update</a>
+            <button type="submit" class="btn-danger btn">Delete</button>
+        </form>
+      </div>
+        <% end %>
+
+    <% else %>
+
+        <p>There are no current stylists</p>
+
     <% end %>
-  </ul>
+  </div>
+  <div class="col-md-4">
 
-<% else %>
-
-    <p>There are no stylists yet!</p>
-
-<% end %>
-
-<div class="form-group">
-<form action="/" method="post">
-  <label for="first_name">Enter first name</label>
-  <input id="first_name" name="first_name" type="text" class="form-control">
-  <label for="last_name">Enter last name</label>
-  <input id="last_name" name="last_name" type="text" class="form-control">
-  <label for="license_number">Enter cosmotology license number</label>
-  <input id="license_number" name="license_number" type="text" class="form-control">
-  <br>
-  <button class="btn-primary btn" type="submit">Add Stylist</button>
-</form>
+    <h3>Add a New Stylists:</h3>
+    <div class="form-group">
+    <form action="/" method="post">
+      <label for="first_name">Enter first name</label>
+      <input id="first_name" name="first_name" type="text" class="form-control">
+      <label for="last_name">Enter last name</label>
+      <input id="last_name" name="last_name" type="text" class="form-control">
+      <label for="license_number">Enter cosmotology license number</label>
+      <input id="license_number" name="license_number" type="text" class="form-control">
+      <br>
+      <button class="btn-primary btn" type="submit">Add Stylist</button>
+    </form>
+    </div>
+    <a href="/clear" class="btn-danger btn">Clear Database</a>
+  </div>
 </div>
-
-<a href="/clear" class="btn-danger btn">Clear Database</a>

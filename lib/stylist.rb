@@ -52,7 +52,7 @@ class Stylist
     DB.exec("UPDATE stylists SET first_name = '#{@first_name}', last_name = '#{@last_name}', cosmetology_lic_number = '#{@cosmetology_lic_number}' WHERE id = #{@id};")
   end
 
-  def delete
-     DB.exec("DELETE FROM stylists WHERE id = #{@id};")
+  def self.delete(id)
+     DB.exec("DELETE FROM stylists WHERE id = #{id};")
   end
 end
