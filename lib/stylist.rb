@@ -23,5 +23,9 @@ class Stylist
     @id = returned_id.first['id'].to_i
   end
 
-
+  def ==(another_stylist)
+    self.first_name().==(another_stylist.first_name()).&
+      (self.last_name().==(another_stylist.last_name())).&
+        (self.cosmetology_lic_number().==(another_stylist.cosmetology_lic_number()))
+  end
 end
