@@ -24,8 +24,13 @@ class Stylist
   end
 
   def ==(another_stylist)
-    self.first_name().==(another_stylist.first_name()).&
-      (self.last_name().==(another_stylist.last_name())).&
-        (self.cosmetology_lic_number().==(another_stylist.cosmetology_lic_number()))
+    self.first_name == another_stylist.first_name and
+    self.last_name == another_stylist.last_name and
+    self.cosmetology_lic_number() == another_stylist.cosmetology_lic_number()
+  end
+
+  def self.find(stylist_id)
+    stylist = DB.exec("SELECT * FROM stylists WHERE id = #{stylist_id};").first
+    Stylist.new(:first_name => stylist['first_name'], :last_name => stylist['last_name'], :cosmetology_lic_number => stylist['cosmetology_lic_number'].to_i, :id => stylist['id'].to_i)
   end
 end
