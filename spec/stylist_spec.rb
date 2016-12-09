@@ -49,4 +49,16 @@ describe(Stylist) do
       expect(Stylist.find(new_stylist.id)).to(eq(new_stylist))
     end
   end
+
+  describe('#clients') do
+    it('returns and array of clients for that stylist') do
+      new_stylist = Stylist.new(:first_name => 'David', :last_name => 'Bowie', :cosmetology_lic_number => 123456)
+      new_stylist.save()
+      new_client = Client.new(:first_name => 'Janis', :last_name => 'Joplin', :stylist_id => new_stylist.id)
+      new_client.save()
+      new_client_two = Client.new(:first_name => 'Jimi', :last_name => 'Hendrix', :stylist_id => new_stylist.id)
+      new_client_two.save()
+      expect(new_stylist.clients()).to(eq([new_client, new_client_two]))
+    end
+  end
 end

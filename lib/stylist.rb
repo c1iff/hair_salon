@@ -33,4 +33,14 @@ class Stylist
     stylist = DB.exec("SELECT * FROM stylists WHERE id = #{stylist_id};").first
     Stylist.new(:first_name => stylist['first_name'], :last_name => stylist['last_name'], :cosmetology_lic_number => stylist['cosmetology_lic_number'].to_i, :id => stylist['id'].to_i)
   end
+
+  def clients
+    returned_clients = DB.exec("SELECT * FROM clients WHERE stylist_id = #{@id};")
+    clients = []
+    returned_clients.each do |each|
+      current_client = Client.new(:first_name => each['first_name'], :last_name => each['last_name'], :stylist_id => each['stylist_id'].to_i, :id => each['id'].to_i)
+      clients.push(current_client)
+    end
+    clients
+  end
 end
