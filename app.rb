@@ -40,8 +40,8 @@ get('/stylist/:id') do
 end
 
 post('/stylist/:id') do
-  first_name = params.fetch("first_name")
-  last_name = params.fetch("last_name")
+  first_name = params.fetch("first_name_client")
+  last_name = params.fetch("last_name_client")
   stylist_id = params.fetch("id").to_i
   new_client = Client.new(:first_name => first_name, :last_name => last_name, :stylist_id => stylist_id)
   new_client.save()
