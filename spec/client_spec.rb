@@ -58,7 +58,7 @@ describe(Client) do
       new_client.save()
       new_client_two = Client.new(:first_name => 'Jimmy', :last_name => 'Page', :stylist_id => 2)
       new_client_two.save()
-      new_client.delete()
+      Client.delete(new_client.id())
       expect(Client.all()).to(eq([new_client_two]))
     end
   end

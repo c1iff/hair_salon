@@ -1,4 +1,4 @@
-<h1>Stylist Information</h1>
+
   <h2><%= @stylist.first_name %> <%= @stylist.last_name %></h2>
   <h5>Cosmetology Licese#: <%= @stylist.cosmetology_lic_number %></h5>
 <div class="row">
@@ -6,15 +6,23 @@
     <% if @clients.any?() %>
     <h3><%= @stylist.first_name %>'s clients:</h3>
 
-    <ul>
       <% @clients.each() do |client| %>
-        <li><%= client.first_name() %> <%= client.last_name() %></li>
+
+      <div class="">
+        <form action="/stylist/<%= @stylist.id %>" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <input type="hidden" name="client_id" value="<%= client.id() %>">
+          <h4><%= client.first_name() %> <%= client.last_name() %></h4>
+
+          <button type="submit" class="btn-danger btn">Delete Client</button>
+        </form>
+      </div>
+
       <% end %>
-    </ul>
 
     <% else %>
 
-      <p><%= @stylist.first_name %> dosen't have any clients assigned yet!</p>
+      <p><%= @stylist.first_name %> dosen't have any clients assigned yet</p>
 
     <% end %>
   </div>
@@ -33,14 +41,15 @@
   </div>
   <div class="col-md-4">
     <h3>Update <%= @stylist.first_name() %>'s information:</h3>
-    <form action="/stylist/ <%= @stylist.id() %>" method="post">
+    <form action="/stylist/<%= @stylist.id() %>" method="post">
       <input type="hidden" name="_method" value="patch">
       <label for="first_name">Update first name</label>
       <input id="first_name" name="first_name" type="text" class="form-control">
       <label for="last_name">Update last name</label>
       <input id="last_name" name="last_name" type="text" class="form-control">
-      <label for="last_name">Update cosmetology license number</label>
-      <input id="last_name" name="last_name" type="text" class="form-control">
+      <label for="license_number">Update cosmetology license number</label>
+      <input id="license_number" name="license_number" type="text" class="form-control">
+      <br>
       <button type="submit" class="btn-warning btn">Update</button>
     </form>
   </div>

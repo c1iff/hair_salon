@@ -85,7 +85,7 @@ describe(Stylist) do
       new_stylist.save()
       new_stylist_two = Stylist.new(:first_name => 'Jimmy', :last_name => 'Page', :cosmetology_lic_number => 456546)
       new_stylist_two.save()
-      new_stylist.delete()
+      Stylist.delete(new_stylist.id())
       expect(Stylist.all()).to(eq([new_stylist_two]))
     end
   end

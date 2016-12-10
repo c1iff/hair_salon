@@ -40,7 +40,7 @@ class Client
     DB.exec("UPDATE clients SET first_name = '#{@first_name}', last_name = '#{@last_name}', stylist_id = '#{@stylist_id}' WHERE id = #{@id};")
   end
 
-  def delete
-     DB.exec("DELETE FROM clients WHERE id = #{@id};")
+  def self.delete(id)
+     DB.exec("DELETE FROM clients WHERE id = #{id};")
   end
 end
